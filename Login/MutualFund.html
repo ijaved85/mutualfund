@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mutual Fund</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="MutualFund.css" />
+
+  <!--Sweet Alert-->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js">
+  </script>
+  
+  <!--Jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+  </script>
+
+  <!--Firebase Libraries-->
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+</head>
+<body>
+  <div id="preloader">
+    <div class="loader">
+      <div class="loader__image">
+        <div class="loader__coin">
+          <img src="./img/coin.png" alt="">
+        </div>
+        <div class="loader__hand">
+          <img src="./img/hand.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="datta">
+    <h1>Main Data</h1>
+    <table class="table summary">
+      <thead>
+        <tr>
+          <th>Invested</th>
+          <th>Current</th>
+          <th>Total Returns</th>
+        </tr>
+      </thead>
+      <tbody id="Main_data">
+        <tr>
+          <td data-label="Invested">0.0</td>
+          <td data-label="Current">0.0</td>
+          <td data-label="Total Returns">0.0</td>
+        </tr>
+      </tbody>
+    </table>
+    <br><br>
+
+    <h1 id="FundName1">Fnud Name</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Nav</th>
+          <th>Unit</th>
+        </tr>
+      </thead>
+      <tbody id="table_data">
+        <tr>
+          <td data-label="Date">01-01-2000</td>
+          <td data-label="Name">Nill</td>
+          <td data-label="Amount">0.0</td>
+          <td data-label="Nav">0.0</td>
+          <td data-label="Unit">0.0</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table summary">
+      <thead>
+        <tr>
+          <th>Total Amount</th>
+          <th>Current NAV</th>
+          <th>Total Unit</th>
+          <th>SIP Redeem</th>
+          <th>P&L</th>
+        </tr>
+      </thead>
+      <tbody id="Summary_data">
+        <tr>
+          <td data-label="Total Amount">01-01-2000</td>
+          <td data-label="Current NAV">0.0</td>
+          <td data-label="Total Unit">0.0</td>
+          <td data-label="SIP Redeem">0.0</td>
+          <td data-label="P&L">0.0</td>
+        </tr>
+      </tbody>
+    </table>
+    <br><br>
+    <h1 id="FundName2">Fnud Name</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Nav</th>
+          <th>Unit</th>
+        </tr>
+      </thead>
+      <tbody id="table_data2">
+        <tr>
+          <td data-label="Date">01-01-2000</td>
+          <td data-label="Name">Nill</td>
+          <td data-label="Amount">0.0</td>
+          <td data-label="Nav">0.0</td>
+          <td data-label="Unit">0.0</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table summary">
+      <thead>
+        <tr>
+          <th>Total Amount</th>
+          <th>Current NAV</th>
+          <th>Total Unit</th>
+          <th>SIP Redeem</th>
+          <th>P&L</th>
+        </tr>
+      </thead>
+      <tbody id="Summary_data2">
+        <tr>
+          <td data-label="Total Amount">01-01-2000</td>
+          <td data-label="Current NAV">0.0</td>
+          <td data-label="Total Unit">0.0</td>
+          <td data-label="SIP Redeem">0.0</td>
+          <td data-label="P&L">0.0</td>
+        </tr>
+      </tbody>
+    </table>
+    <br><br>
+    <h1 id="FundName3">Fnud Name</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Nav</th>
+          <th>Unit</th>
+        </tr>
+      </thead>
+      <tbody id="table_data3">
+        <tr>
+          <td data-label="Date">01-01-2000</td>
+          <td data-label="Name">Nill</td>
+          <td data-label="Amount">0.0</td>
+          <td data-label="Nav">0.0</td>
+          <td data-label="Unit">0.0</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table summary">
+      <thead>
+        <tr>
+          <th>Total Amount</th>
+          <th>Current NAV</th>
+          <th>Total Unit</th>
+          <th>SIP Redeem</th>
+          <th>P&L</th>
+        </tr>
+      </thead>
+      <tbody id="Summary_data3">
+        <tr>
+          <td data-label="Total Amount">01-01-2000</td>
+          <td data-label="Current NAV">0.0</td>
+          <td data-label="Total Unit">0.0</td>
+          <td data-label="SIP Redeem">0.0</td>
+          <td data-label="P&L">0.0</td>
+        </tr>
+      </tbody>
+    </table>
+    <br><br>
+    <h1 id="FundName4">Fnud Name</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Nav</th>
+          <th>Unit</th>
+        </tr>
+      </thead>
+      <tbody id="table_data4">
+        <tr>
+          <td data-label="Date">01-01-2000</td>
+          <td data-label="Name">Nill</td>
+          <td data-label="Amount">0.0</td>
+          <td data-label="Nav">0.0</td>
+          <td data-label="Unit">0.0</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table summary">
+      <thead>
+        <tr>
+          <th>Total Amount</th>
+          <th>Current NAV</th>
+          <th>Total Unit</th>
+          <th>SIP Redeem</th>
+          <th>P&L</th>
+        </tr>
+      </thead>
+      <tbody id="Summary_data4">
+        <tr>
+          <td data-label="Total Amount">01-01-2000</td>
+          <td data-label="Current NAV">0.0</td>
+          <td data-label="Total Unit">0.0</td>
+          <td data-label="SIP Redeem">0.0</td>
+          <td data-label="P&L">0.0</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <div class="mf">
+      <span class="mf"><a href="logout.html"></a></span>
+      <span class="mfb"><a href="./Mutualform.html"></a></span>
+    </div>
+  </div>
+  <script src="./Scriptfiles/Firebase.js"></script>
+  <script src="./Scriptfiles/MutualFund.js"></script>
+
+
+</body>
+</html>
