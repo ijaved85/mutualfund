@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+   <!--Sweet Alert-->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js">
+  </script>
+
+  <!--Jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+  </script>
+
+    <link rel="stylesheet" href="style.css" />
+
+  <!--Firebase Libraries-->
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
+</head>
+<body>
+  <div class="panda">
+    <div class="ear"></div>
+    <div class="face">
+      <div class="eye-shade"></div>
+      <div class="eye-white">
+        <div class="eye-ball"></div>
+      </div>
+      <div class="eye-shade rgt"></div>
+      <div class="eye-white rgt">
+        <div class="eye-ball"></div>
+      </div>
+      <div class="nose"></div>
+      <div class="mouth"></div>
+    </div>
+    <div class="body">
+    </div>
+    <div class="foot">
+      <div class="finger"></div>
+    </div>
+    <div class="foot rgt">
+      <div class="finger"></div>
+    </div>
+  </div>
+  <form>
+    <div class="hand"></div>
+    <div class="hand rgt"></div>
+    <h1>Login</h1>
+    <div class="form-group">
+      <input id="username" required="required" class="form-control" />
+      <label class="form-label">Username    </label>
+    </div>
+    <div class="form-group">
+      <input id="password" type="password" required="required" class="form-control" />
+      <label class="form-label">Password</label>
+      <p class="alert" id="alert">
+      </p>
+      <button class="btn">Login </button>
+    </div>
+  </form>
+
+  <script src="./Login/Scriptfiles/Firebase.js"></script>
+  <script src="./Login.js"></script>
+
+</body>
+</html>
