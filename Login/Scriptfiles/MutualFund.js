@@ -242,7 +242,7 @@ const getdata4 = ()=> {
 
 const mainInfo = () => {
   $('#Main_data').text("");
-  TotalReturn = Current - Invested;
+  TotalReturn = (Current - Invested).toFixed(2);
   console.log(Invested,
     Current,
     TotalReturn)
