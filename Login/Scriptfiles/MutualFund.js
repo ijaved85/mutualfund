@@ -1,7 +1,7 @@
 auth.onAuthStateChanged(user => {
   if (user) {
     $("body").css("display", "initial");
-    
+
   } else {
     window.location.href = "../index";
   }
@@ -62,7 +62,6 @@ const getdata = ()=> {
 
         calc = Number(amount);
         TotalAmount += calc;
-        Invested += TotalAmount;
         calc = Number(unit);
         TotalUnit += calc;
       });
@@ -74,8 +73,8 @@ const getdata = ()=> {
       SIPRedeem = (CurrentNAV * TotalUnit).toFixed(3);
       Current += Number(SIPRedeem);
       pal = (SIPRedeem - TotalAmount).toFixed(3);
-      //CurrentNAV = CurrentNAV.toFixed(2);
-      //
+      Invested += TotalAmount;
+
       fillData = '<tr  id="sdata"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal">₹ '+pal+'</td></tr>';
 
       $('#Summary_data').append(fillData);
@@ -115,7 +114,6 @@ const getdata2 = ()=> {
 
         calc = Number(amount);
         TotalAmount += calc;
-        Invested += TotalAmount;
         calc = Number(unit);
         TotalUnit += calc;
       });
@@ -123,6 +121,7 @@ const getdata2 = ()=> {
       SIPRedeem = (CurrentNAV2 * TotalUnit).toFixed(3);
       Current += Number(SIPRedeem);
       pal = (SIPRedeem - TotalAmount).toFixed(3);
+      Invested += TotalAmount;
 
       fillData = '<tr  id="sdata2"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV2+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal2">₹ '+pal+'</td></tr>';
 
@@ -164,7 +163,6 @@ const getdata3 = ()=> {
 
         calc = Number(amount);
         TotalAmount += calc;
-        Invested += TotalAmount;
         calc = Number(unit);
         TotalUnit += calc;
       });
@@ -172,6 +170,7 @@ const getdata3 = ()=> {
       SIPRedeem = (CurrentNAV3 * TotalUnit).toFixed(3);
       Current += Number(SIPRedeem);
       pal = (SIPRedeem - TotalAmount).toFixed(3);
+      Invested += TotalAmount;
 
       fillData = '<tr  id="sdata3"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV3+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal3">₹ '+pal+'</td></tr>';
 
@@ -214,7 +213,6 @@ const getdata4 = ()=> {
 
         calc = Number(amount);
         TotalAmount += calc;
-        Invested += TotalAmount;
         calc = Number(unit);
         TotalUnit += calc;
       });
@@ -222,6 +220,7 @@ const getdata4 = ()=> {
       SIPRedeem = (CurrentNAV4 * TotalUnit).toFixed(3);
       Current += Number(SIPRedeem);
       pal = (SIPRedeem - TotalAmount).toFixed(3);
+      Invested += TotalAmount;
 
       fillData = '<tr  id="sdata4"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV4+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal4">₹ '+pal+'</td></tr>';
 
