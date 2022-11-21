@@ -40,12 +40,17 @@ const Pay = () => {
     fund = 'Parag Parikh Flexi Cap Fund/';
     HolderName = "Javed Iqbal";
 
-  } else if ($('#sel').val() == "TaxPlan") {
+  } else if ($('#sel').val() == "TaxSaver") {
+
+    fund = 'Mirae Asset Tax Saver Fund - Direct Plan - Growth/';
+    HolderName = "Javed Iqbal";
+
+  }else if ($('#sel').val() == "TaxPlan") {
 
     fund = 'Quant Tax Plan - Growth Option - Direct Plan/';
     HolderName = "Javed Iqbal";
 
-  } else {
+  }  else {
 
     fund = 'Quant Liquid Fund - Growth Option - Direct Plan/';
     HolderName = "Javed Iqbal";
