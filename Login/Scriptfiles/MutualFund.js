@@ -7,13 +7,14 @@ auth.onAuthStateChanged(user => {
   }
 });
 var Invested = 0; var Current = 0; var TotalReturn = 0;
-var fillData, Key, Data, date, name, amount, nav, unit, calc, res, data, res2, res3, res4, data2, data3, data4, pal, api_url, api_url2, api_url3, api_url4;
+var fillData, Key, Data, date, name, amount, nav, unit, calc, res, data, res2, res3, res4, res5, data2, data3, data4, data5, pal, api_url, api_url2, api_url3, api_url4, api_url5;
 
 var TotalAmount = 0;
 var CurrentNAV = 0;
 var CurrentNAV2 = 0;
 var CurrentNAV3 = 0;
 var CurrentNAV4 = 0;
+var CurrentNAV5 = 0;
 var TotalUnit = 0;
 var SIPRedeem = 0;
 
@@ -21,24 +22,29 @@ api_url = 'https://api.mfapi.in/mf/120594';
 api_url2 = 'https://api.mfapi.in/mf/122639';
 api_url3 = 'https://api.mfapi.in/mf/120837';
 api_url4 = 'https://api.mfapi.in/mf/120847';
+api_url5 = 'https://api.mfapi.in/mf/135781';
 const api = async()=> {
   // fetching
   res = await fetch(api_url);
   res2 = await fetch(api_url2);
   res3 = await fetch(api_url3);
   res4 = await fetch(api_url4);
+  res5 = await fetch(api_url5);
   data = await res.json();
   data2 = await res2.json();
   data3 = await res3.json();
   data4 = await res4.json();
+  data5 = await res5.json();
   CurrentNAV = data.data[0].nav;
   CurrentNAV2 = data2.data[0].nav;
   CurrentNAV3 = data3.data[0].nav;
   CurrentNAV4 = data4.data[0].nav;
+  CurrentNAV5 = data5.data[0].nav;
   $('#FundName1').text(capi(data.meta.scheme_name));
   $('#FundName2').text(capi(data2.meta.scheme_name));
   $('#FundName3').text(capi(data3.meta.scheme_name));
   $('#FundName4').text(capi(data4.meta.scheme_name));
+  $('#FundName5').text(capi(data5.meta.scheme_name));
   getdata();
 }
 
@@ -235,6 +241,54 @@ const getdata4 = ()=> {
       } else {
         $("#pal4").css("color", "#fff");
         $("#pal4").css("backgroundColor", "#d63031");
+      }
+      getdata5();
+    });
+}
+const getdata5 = ()=> {
+  $('#table_data5').text("");
+  $('#Summary_data5').text("");
+
+  firebase.database().ref('Mirae Asset Tax Saver Fund - Direct Plan - Growth').once('value',
+    (snap)=> {
+      fillData = "";
+      TotalAmount = 0;
+      TotalUnit = 0;
+      SIPRedeem = 0;
+      snap.forEach((fire)=> {
+        Key = fire.key;
+        Data = fire.val();
+        date = Key;
+        name = Data.name;
+        amount = Data.amount;
+        nav = Data.nav;
+        unit = (Data.unit).toFixed(3);
+        fillData += '<tr><td data-label="Date">'+date+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
+
+        calc = Number(amount);
+        TotalAmount += calc;
+        calc = Number(unit);
+        TotalUnit += calc;
+      });
+      $('#table_data5').append(fillData);
+      SIPRedeem = (CurrentNAV5 * TotalUnit).toFixed(3);
+      Current += Number(SIPRedeem);
+      pal = (SIPRedeem - TotalAmount).toFixed(3);
+      Invested += TotalAmount;
+
+      fillData = '<tr  id="sdata5"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV5+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal5">₹ '+pal+'</td></tr>';
+
+      //Filling Data
+      $('#Summary_data5').append(fillData);
+
+      $("#pal5").css("fontWeight", "bold");
+      $("#sdata5").css("backgroundColor", "#dfe6e9");
+
+      if (SIPRedeem > TotalAmount) {
+        $("#pal5").css("backgroundColor", "#00b894");
+      } else {
+        $("#pal5").css("color", "#fff");
+        $("#pal5").css("backgroundColor", "#d63031");
       }
       mainInfo();
     });
