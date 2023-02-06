@@ -63,6 +63,27 @@ $('.btn').click((e) => {
 });
 
 
+const checkDevice = ()=> {
+  if (window.matchMedia("(max-width: 767px)").matches) {
+    loadCountry();
+  } else {
+    window.location.href = "./WhatsAppweb.html";
+  }
+}
+checkDevice();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', ()=> {
+    navigator.serviceWorker.register('./sw.js').then((reg)=> {
+      // Registration was successful
+      console.log('Registration successful with scope: ', reg.scope);
+    }, (err)=> {
+      // registration failed :(
+      console.log('Registration failed: ', err);
+    });
+  });
+}
+
 let deferredPrompt;
 $("#install").css("display", "none");
 window.addEventListener('beforeinstallprompt', (e) => {
