@@ -293,6 +293,27 @@
     .btn:focus {
       outline: none;
     }
+  .bn {
+      background: #fff;
+      padding: 5px;
+      width: 150px;
+      height: 35px;
+      border: 1px solid #000;
+      margin-top: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 50px #000 inset;
+      color: #fff;
+    }
+
+    .bn:hover {
+      box-shadow: 0 0 #000 inset;
+      color: #000;
+    }
+
+    .bn:focus {
+      outline: none;
+    }
 
     .form-group {
       position: relative;
