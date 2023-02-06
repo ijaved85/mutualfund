@@ -304,6 +304,7 @@
       transition: 0.3s;
       box-shadow: 0 50px #000 inset;
       color: #fff;
+      z-index: 99;
     }
 
     .bn:hover {
