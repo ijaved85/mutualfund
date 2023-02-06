@@ -1,0 +1,19 @@
+{
+  "short_name": "Mutual Fund",
+  "name": "Mutual Fund",
+  "icons": [
+    {
+      "src": "faviconn.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "faviconn.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "https://ijaved85.github.io/mutualfund/Login/",
+  "display": "standalone",
+  "theme_color": "#000112"
+}
