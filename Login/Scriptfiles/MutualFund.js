@@ -54,7 +54,8 @@ const getdata = ()=> {
   firebase.database().ref('ICICI Prudential Technology Fund').once('value',
     (snap)=> {
       snap.forEach((fire)=> {
-        Key = fire.key;
+        Key = fire;
+       // Key = fire.key;
         Data = fire.val();
         date = Key;
         name = Data.name;
