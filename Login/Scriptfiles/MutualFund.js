@@ -56,7 +56,8 @@ const getdata = ()=> {
       ti = Object.key(snap).length;
       snap.forEach((fire)=> {
         Key = fire.key;
-        
+        ti1 = Object.key(fire).length;
+        ti2 = Object.key(Key).length;
        // Key = fire.key;
         Data = fire.val();
         date = Key;
@@ -67,7 +68,7 @@ const getdata = ()=> {
         // unit = unit.toFixed(3);
 
         //Storing The Data In A Variable
-        fillData += '<tr><td data-label="Date">'+ti+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
+        fillData += '<tr><td data-label="Date">'+ti+','+ti1+','+ti2+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
 
         calc = Number(amount);
         TotalAmount += calc;
