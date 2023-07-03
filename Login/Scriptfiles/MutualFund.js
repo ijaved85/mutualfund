@@ -53,7 +53,7 @@ const getdata = ()=> {
   $('#Summary_data').text("");
   firebase.database().ref('ICICI Prudential Technology Fund').once('value',
     (snap)=> {
-      ti = Object.keys(snap).length;
+      ti = Object.key(snap).length;
       snap.forEach((fire)=> {
         Key = fire.key;
         
