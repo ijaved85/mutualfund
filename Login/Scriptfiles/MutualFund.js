@@ -66,7 +66,7 @@ const fetchAllData = async () => {
 fetchAllData().then((data) => {
   var i = 1;
   data.forEach((fundData) => {
-    let addTab;
+    let addTab = "";
     console.log(fundData);
     firebase.database().ref(fundData.name).once('value',
       (snap)=> {
@@ -143,28 +143,17 @@ fetchAllData().then((data) => {
           $("#TR").css("backgroundColor", "#d63031");
         }
       });
-
-    //  mainInfo();
   });
-
-
-
-
-
+  fade();
 }).catch((error) => {
   console.error(error);
 });
 
-/*
-const mainInfo = () => {
 
-}
-
-*/
 
 const createTable = (i)=> {
   let creTab;
-  creTab = '<h1 id="FundName'+i+'">Fnud Name</h1><table class="table"><thead><tr><th>Date</th><th>Name</th><th>Amount</th><th>Nav</th><th>Unit</th></tr></thead><tbody id="table_data'+i+'"></tbody></table><table class="table summary"><thead><tr><th>Total Amount</th><th>Current NAV</th><th>Total Unit</th><th>Current Amount</th><th>P&L</th></tr></thead><tbody id="Summary_data'+i+'"></tbody></table><br><br>';
+  creTab = '<h1 id="FundName'+i+'">Fnud Name</h1><br><table class="table"><thead><tr><th>Date</th><th>Name</th><th>Amount</th><th>Nav</th><th>Unit</th></tr></thead><tbody id="table_data'+i+'"></tbody></table><table class="table summary"><thead><tr><th>Total Amount</th><th>Current NAV</th><th>Total Unit</th><th>Current Amount</th><th>P&L</th></tr></thead><tbody id="Summary_data'+i+'"></tbody></table><br><br>';
   return creTab;
 }
 
@@ -173,13 +162,11 @@ const createTable = (i)=> {
 
 
 const fade = ()=> {
+  setTimeout(() => {
   $("#datta").css("display",
     "initial");
   $("#preloader").css("display",
-    "none");
+    "none");},5000);
 }
 
-const capi = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-window.onload = fade;
+//window.onload = fade;
