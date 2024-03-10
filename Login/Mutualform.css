@@ -120,3 +120,6 @@ select:focus{
 fa {
   color: #ffffff;
 }
+#siphol {
+  display: none;
+}
