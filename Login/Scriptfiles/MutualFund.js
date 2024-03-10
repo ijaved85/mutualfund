@@ -6,322 +6,171 @@ auth.onAuthStateChanged(user => {
     window.location.href = "../index";
   }
 });
-var Invested = 0; var Current = 0; var TotalReturn = 0;
-var fillData, Key, Data, date, name, amount, nav, unit, calc, res, data, res2, res3, res4, res5, data2, data3, data4, data5, pal, api_url, api_url2, api_url3, api_url4, api_url5;
 
+let Invested = 0;
+let Current = 0;
+let TotalReturn = 0;
 var TotalAmount = 0;
 var CurrentNAV = 0;
-var CurrentNAV2 = 0;
-var CurrentNAV3 = 0;
-var CurrentNAV4 = 0;
-var CurrentNAV5 = 0;
 var TotalUnit = 0;
 var SIPRedeem = 0;
+var fillData, Key, Data, date, name, amount, nav, unit, calc, res, data, PAL;
 
-api_url = 'https://api.mfapi.in/mf/120594';
-api_url2 = 'https://api.mfapi.in/mf/122639';
-api_url3 = 'https://api.mfapi.in/mf/120837';
-api_url4 = 'https://api.mfapi.in/mf/120847';
-api_url5 = 'https://api.mfapi.in/mf/135781';
-const api = async()=> {
-  // fetching
-  res = await fetch(api_url);
-  res2 = await fetch(api_url2);
-  res3 = await fetch(api_url3);
-  res4 = await fetch(api_url4);
-  res5 = await fetch(api_url5);
-  data = await res.json();
-  data2 = await res2.json();
-  data3 = await res3.json();
-  data4 = await res4.json();
-  data5 = await res5.json();
-  CurrentNAV = data.data[0].nav;
-  CurrentNAV2 = data2.data[0].nav;
-  CurrentNAV3 = data3.data[0].nav;
-  CurrentNAV4 = data4.data[0].nav;
-  CurrentNAV5 = data5.data[0].nav;
-  $('#FundName1').text(capi(data.meta.scheme_name));
-  $('#FundName2').text(capi(data2.meta.scheme_name));
-  $('#FundName3').text(capi(data3.meta.scheme_name));
-  $('#FundName4').text(capi(data4.meta.scheme_name));
-  $('#FundName5').text(capi(data5.meta.scheme_name));
-  getdata();
-}
+const funds = [{
+  id: '120197', name: 'ICICI Prudential Liquid Fund'
+},
+  {
+    id: '122639', name: 'Parag Parikh Flexi Cap Fund'
+  },
+  {
+    id: '120828', name: 'Quant Small Cap Fund'
+  },
+  {
+    id: '120847', name: 'Quant ELSS Tax Saver Fund'
+  },
+  {
+    id: '125354', name: 'Axis Small Cap Fund'
+  },
+  {
+    id: '135781', name: 'Mirae Asset ELSS Tax Saver Fund'
+  },
+];
 
-const getdata = ()=> {
-  $('#table_data').text("");
-  $('#Summary_data').text("");
-  firebase.database().ref('ICICI Prudential Technology Fund').once('value',
-    (snap)=> {
-      ti = Object.key(snap).length;
-      snap.forEach((fire)=> {
-        Key = fire.key;
-        ti1 = Object.key(fire).length;
-        ti2 = Object.key(Key).length;
-       // Key = fire.key;
-        Data = fire.val();
-        date = Key;
-        name = Data.name;
-        amount = Data.amount;
-        nav = Data.nav;
-        unit = (Data.unit).toFixed(3);
-        // unit = unit.toFixed(3);
+const baseApiUrl = 'https://api.mfapi.in/mf/';
 
-        //Storing The Data In A Variable
-        fillData += '<tr><td data-label="Date">'+ti+','+ti1+','+ti2+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
-
-        calc = Number(amount);
-        TotalAmount += calc;
-        calc = Number(unit);
-        TotalUnit += calc;
-      });
-
-      //Pussing Data In The Table
-      $('#table_data').append(fillData);
-
-      //Calculation
-      SIPRedeem = (CurrentNAV * TotalUnit).toFixed(3);
-      Current += Number(SIPRedeem);
-      pal = (SIPRedeem - TotalAmount).toFixed(3);
-      Invested += TotalAmount;
-
-      fillData = '<tr  id="sdata"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal">₹ '+pal+'</td></tr>';
-
-      $('#Summary_data').append(fillData);
-
-      $("#pal").css("fontWeight", "bold");
-      $("#sdata").css("backgroundColor", "#dfe6e9");
-
-      if (SIPRedeem > TotalAmount) {
-        $("#pal").css("backgroundColor", "#00b894");
-      } else {
-        $("#pal").css("color", "#fff");
-        $("#pal").css("backgroundColor", "#d63031");
-      }
-    });
-  getdata2();
-}
-
-const getdata2 = ()=> {
-  $('#table_data2').text("");
-  $('#Summary_data2').text("");
-
-  firebase.database().ref('Parag Parikh Flexi Cap Fund').once('value',
-    (snap)=> {
-      fillData = "";
-      TotalAmount = 0;
-      TotalUnit = 0;
-      SIPRedeem = 0;
-      snap.forEach((fire)=> {
-        Key = fire.key;
-        Data = fire.val();
-        date = Key;
-        name = Data.name;
-        amount = Data.amount;
-        nav = Data.nav;
-        unit = (Data.unit).toFixed(3);
-        fillData += '<tr><td data-label="Date">'+date+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
-
-        calc = Number(amount);
-        TotalAmount += calc;
-        calc = Number(unit);
-        TotalUnit += calc;
-      });
-      $('#table_data2').append(fillData);
-      SIPRedeem = (CurrentNAV2 * TotalUnit).toFixed(3);
-      Current += Number(SIPRedeem);
-      pal = (SIPRedeem - TotalAmount).toFixed(3);
-      Invested += TotalAmount;
-
-      fillData = '<tr  id="sdata2"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV2+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal2">₹ '+pal+'</td></tr>';
-
-      //Filling Data
-      $('#Summary_data2').append(fillData);
-
-      $("#pal2").css("fontWeight", "bold");
-      $("#sdata2").css("backgroundColor", "#dfe6e9");
-
-      if (SIPRedeem > TotalAmount) {
-        $("#pal2").css("backgroundColor", "#00b894");
-      } else {
-        $("#pal2").css("color", "#fff");
-        $("#pal2").css("backgroundColor", "#d63031");
-      }
-      getdata3();
-    });
-}
-
-const getdata3 = ()=> {
-  $('#table_data3').text("");
-  $('#Summary_data3').text("");
-
-  firebase.database().ref('Quant Liquid Fund - Growth Option - Direct Plan').once('value',
-    (snap)=> {
-      fillData = "";
-      TotalAmount = 0;
-      TotalUnit = 0;
-      SIPRedeem = 0;
-      snap.forEach((fire)=> {
-        Key = fire.key;
-        Data = fire.val();
-        date = Key;
-        name = Data.name;
-        amount = Data.amount;
-        nav = Data.nav;
-        unit = (Data.unit).toFixed(3);
-        fillData += '<tr><td data-label="Date">'+date+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
-
-        calc = Number(amount);
-        TotalAmount += calc;
-        calc = Number(unit);
-        TotalUnit += calc;
-      });
-      $('#table_data3').append(fillData);
-      SIPRedeem = (CurrentNAV3 * TotalUnit).toFixed(3);
-      Current += Number(SIPRedeem);
-      pal = (SIPRedeem - TotalAmount).toFixed(3);
-      Invested += TotalAmount;
-
-      fillData = '<tr  id="sdata3"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV3+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal3">₹ '+pal+'</td></tr>';
-
-      //Filling Data
-      $('#Summary_data3').append(fillData);
-
-      $("#pal3").css("fontWeight", "bold");
-      $("#sdata3").css("backgroundColor", "#dfe6e9");
-
-      if (SIPRedeem > TotalAmount) {
-        $("#pal3").css("backgroundColor", "#00b894");
-      } else {
-        $("#pal3").css("color", "#fff");
-        $("#pal3").css("backgroundColor", "#d63031");
-      }
-      getdata4();
-    });
-}
+const fetchDataForFund = async (fundId) => {
+  const url = `${baseApiUrl}${fundId}`;
+  console.log(url);
+  const res = await fetch(url);
+  const data = await res.json();
+  return data;
+};
 
 
-const getdata4 = ()=> {
-  $('#table_data4').text("");
-  $('#Summary_data4').text("");
-
-  firebase.database().ref('Quant Tax Plan - Growth Option - Direct Plan').once('value',
-    (snap)=> {
-      fillData = "";
-      TotalAmount = 0;
-      TotalUnit = 0;
-      SIPRedeem = 0;
-      snap.forEach((fire)=> {
-        Key = fire.key;
-        Data = fire.val();
-        date = Key;
-        name = Data.name;
-        amount = Data.amount;
-        nav = Data.nav;
-        unit = (Data.unit).toFixed(3);
-        fillData += '<tr><td data-label="Date">'+date+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
-
-        calc = Number(amount);
-        TotalAmount += calc;
-        calc = Number(unit);
-        TotalUnit += calc;
-      });
-      $('#table_data4').append(fillData);
-      SIPRedeem = (CurrentNAV4 * TotalUnit).toFixed(3);
-      Current += Number(SIPRedeem);
-      pal = (SIPRedeem - TotalAmount).toFixed(3);
-      Invested += TotalAmount;
-
-      fillData = '<tr  id="sdata4"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV4+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal4">₹ '+pal+'</td></tr>';
-
-      //Filling Data
-      $('#Summary_data4').append(fillData);
-
-      $("#pal4").css("fontWeight", "bold");
-      $("#sdata4").css("backgroundColor", "#dfe6e9");
-
-      if (SIPRedeem > TotalAmount) {
-        $("#pal4").css("backgroundColor", "#00b894");
-      } else {
-        $("#pal4").css("color", "#fff");
-        $("#pal4").css("backgroundColor", "#d63031");
-      }
-      getdata5();
-    });
-}
-const getdata5 = ()=> {
-  $('#table_data5').text("");
-  $('#Summary_data5').text("");
-
-  firebase.database().ref('Mirae Asset Tax Saver Fund - Direct Plan - Growth').once('value',
-    (snap)=> {
-      fillData = "";
-      TotalAmount = 0;
-      TotalUnit = 0;
-      SIPRedeem = 0;
-      snap.forEach((fire)=> {
-        Key = fire.key;
-        Data = fire.val();
-        date = Key;
-        name = Data.name;
-        amount = Data.amount;
-        nav = Data.nav;
-        unit = (Data.unit).toFixed(3);
-        fillData += '<tr><td data-label="Date">'+date+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
-
-        calc = Number(amount);
-        TotalAmount += calc;
-        calc = Number(unit);
-        TotalUnit += calc;
-      });
-      $('#table_data5').append(fillData);
-      SIPRedeem = (CurrentNAV5 * TotalUnit).toFixed(3);
-      Current += Number(SIPRedeem);
-      pal = (SIPRedeem - TotalAmount).toFixed(3);
-      Invested += TotalAmount;
-
-      fillData = '<tr  id="sdata5"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV5+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="SIP Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="pal5">₹ '+pal+'</td></tr>';
-
-      //Filling Data
-      $('#Summary_data5').append(fillData);
-
-      $("#pal5").css("fontWeight", "bold");
-      $("#sdata5").css("backgroundColor", "#dfe6e9");
-
-      if (SIPRedeem > TotalAmount) {
-        $("#pal5").css("backgroundColor", "#00b894");
-      } else {
-        $("#pal5").css("color", "#fff");
-        $("#pal5").css("backgroundColor", "#d63031");
-      }
-      mainInfo();
-    });
-}
-
-const mainInfo = () => {
-  $('#Main_data').text("");
-  TotalReturn = (Current - Invested).toFixed(2);
-  console.log(Invested,
-    Current,
-    TotalReturn)
-  fillData = '<tr id="mdata"><td data-label="Invested">₹ '+Invested+'</td><td data-label="Current">₹ '+Current+'</td><td data-label="Total Returns" id="TR">₹ '+TotalReturn+'</td></tr>';
-
-  //Filling Data
-  $('#Main_data').append(fillData);
-
-  $("#TR").css("fontWeight",
-    "bold");
-  $("#mdata").css("backgroundColor",
-    "#dfe6e9");
-
-  if (TotalReturn >= 0) {
-    $("#TR").css("backgroundColor", "#00b894");
-  } else {
-    $("#TR").css("color", "#fff");
-    $("#TR").css("backgroundColor", "#d63031");
+const fetchAllData = async () => {
+  const allData = [];
+  for (const fund of funds) {
+    const data = await fetchDataForFund(fund.id);
+    // Extract necessary data from the response
+    const fundData = {
+      id: fund.id,
+      name: fund.name,
+      nav: data.data[0].nav,
+    };
+    allData.push(fundData);
   }
-  fade();
+  return allData;
+};
+
+
+fetchAllData().then((data) => {
+  var i = 1;
+  data.forEach((fundData) => {
+    let addTab;
+    console.log(fundData);
+    firebase.database().ref(fundData.name).once('value',
+      (snap)=> {
+        addTab += createTable(i);
+        $('#MainTable').append(addTab);
+
+        let addRow, addCal;
+        snap.forEach((fire)=> {
+          Key = fire.key;
+          Data = fire.val();
+          date = Key;
+          name = Data.name;
+          amount = Data.amount;
+          nav = Data.nav;
+          unit = Data.unit;
+          calc = Number(amount);
+          TotalAmount += calc;
+          calc = Number(unit);
+          TotalUnit += calc;
+
+
+          $('#FundName'+i).text(fundData.name);
+          addRow += '<tr><td data-label="Date">'+date+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
+
+        });
+        $('#table_data'+i).append(addRow);
+
+
+        //Calculation
+        CurrentNAV = fundData.nav;
+        SIPRedeem = (CurrentNAV * TotalUnit).toFixed(3);
+        Current += Number(SIPRedeem);
+        PAL = (SIPRedeem - TotalAmount).toFixed(3);
+
+        Invested += TotalAmount;
+        calc = TotalAmount.toFixed(2);
+        TotalAmount = calc;
+        addCal = '<tr id="sdata"><td data-label="Total Amount">₹ '+TotalAmount+'</td><td data-label="Current NAV">'+CurrentNAV+'</td><td data-label="Total Unit">'+TotalUnit+'</td><td data-label="Redeem">₹ '+SIPRedeem+'</td><td data-label="P&L" id="PAL'+i+'">₹ '+PAL+'</td></tr>';
+        $('#Summary_data'+i).append(addCal);
+
+        $("#PAL"+i).css("fontWeight", "bold");
+        $("#sdata").css("backgroundColor", "#dfe6e9");
+
+        if (SIPRedeem > TotalAmount) {
+          $("#PAL"+i).css("backgroundColor", "#00b894");
+        } else {
+          $("#PAL"+i).css("color", "#fff");
+          $("#PAL"+i).css("backgroundColor", "#d63031");
+        }
+
+        i++;
+        TotalAmount = 0;
+        CurrentNAV = 0;
+        TotalUnit = 0;
+        SIPRedeem = 0;
+        PAL = 0;
+
+        Invested = Math.round(Invested);
+        Current = Math.round(Current);
+        TotalReturn = Current - Invested;
+
+        $('#Main_data').text("");
+        addCal = '<tr id="mdata"><td data-label="Invested">₹ '+Invested+'</td><td data-label="Current">₹ '+Current+'</td><td data-label="Total Returns" id="TR">₹ '+TotalReturn+'</td></tr>';
+        $('#Main_data').append(addCal);
+
+        //Filling Data
+        $("#TR").css("fontWeight", "bold");
+        $("#mdata").css("backgroundColor", "#dfe6e9");
+
+        if (TotalReturn >= 0) {
+          $("#TR").css("backgroundColor", "#00b894");
+        } else {
+          $("#TR").css("color", "#fff");
+          $("#TR").css("backgroundColor", "#d63031");
+        }
+      });
+
+    //  mainInfo();
+  });
+
+
+
+
+
+}).catch((error) => {
+  console.error(error);
+});
+
+/*
+const mainInfo = () => {
+
 }
+
+*/
+
+const createTable = (i)=> {
+  let creTab;
+  creTab = '<h1 id="FundName'+i+'">Fnud Name</h1><table class="table"><thead><tr><th>Date</th><th>Name</th><th>Amount</th><th>Nav</th><th>Unit</th></tr></thead><tbody id="table_data'+i+'"></tbody></table><table class="table summary"><thead><tr><th>Total Amount</th><th>Current NAV</th><th>Total Unit</th><th>Current Amount</th><th>P&L</th></tr></thead><tbody id="Summary_data'+i+'"></tbody></table><br><br>';
+  return creTab;
+}
+
+
+
+
 
 const fade = ()=> {
   $("#datta").css("display",
@@ -333,4 +182,4 @@ const fade = ()=> {
 const capi = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-window.onload = api;
+window.onload = fade;
