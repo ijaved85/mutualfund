@@ -7,6 +7,39 @@ auth.onAuthStateChanged(user => {
     window.location.href = "../index";
   }
 });
+const funds = [{
+  name: 'ICICI Prudential Liquid Fund', value: 'ICICI', holderName: 'Javed Iqbal'
+},
+  {
+    name: 'Parag Parikh Flexi Cap Fund', value: 'PARAG', holderName: 'Javed Iqbal'
+  },
+  {
+    name: 'Quant Small Cap Fund', value: 'QSCF', holderName: 'Javed & Obaidur'
+  },
+  {
+    name: 'Quant ELSS Tax Saver Fund', value: 'QTAX', holderName: 'Javed Iqbal'
+  },
+  {
+    name: 'Axis Small Cap Fund', value: 'ASCF', holderName: 'Javed Iqbal'
+  },
+  {
+    name: 'Mirae Asset ELSS Tax Saver Fund', value: 'MTAX', holderName: 'Javed Iqbal'
+  }];
+
+const sel = document.getElementById('seel');
+
+funds.forEach((fund) => {
+  const option = document.createElement('option');
+  option.value = fund.value;
+  option.textContent = fund.name;
+  sel.appendChild(option);
+});
+
+
+
+
+
+
 
 
 let HolderName, Amount, SipDate, Nav, Unit, fund;
@@ -26,52 +59,31 @@ const entry = () => {
 }
 
 const Pay = () => {
-  if ($('#sel').val() == "ICICI") {
-
-    fund = 'ICICI Prudential Technology Fund/';
-    if ($('#hn').is(':checked')) {
-      HolderName = "Javed & Obaidur";
-    } else {
-      HolderName = "Javed Iqbal";
-    }
-
-  } else if ($('#sel').val() == "Parag") {
-
-    fund = 'Parag Parikh Flexi Cap Fund/';
-    HolderName = "Javed Iqbal";
-
-  } else if ($('#sel').val() == "TaxSaver") {
-
-    fund = 'Mirae Asset Tax Saver Fund - Direct Plan - Growth/';
-    HolderName = "Javed Iqbal";
-
-  }else if ($('#sel').val() == "TaxPlan") {
-
-    fund = 'Quant Tax Plan - Growth Option - Direct Plan/';
-    HolderName = "Javed Iqbal";
-
-  }  else {
-
-    fund = 'Quant Liquid Fund - Growth Option - Direct Plan/';
-    HolderName = "Javed Iqbal";
-
+  const selValue = $('#seel').val();
+  const selectedFund = funds.find(fund => fund.value === selValue);
+  console.log(selectedFund);
+  if (!selectedFund) {
+    alert("Invalid Fund Selection");
+    return;
   }
 
-  Amount = $("#amnt").val();
-  SipDate = $("#sipdate").val();
-  Nav = $("#navval").val();
-  Unit = Amount / Nav;
-  if (HolderName == "" || Amount == "" || SipDate == "") {
+  const Amount = $("#amnt").val();
+  const SipDate = $("#sipdate").val();
+  const Nav = parseFloat($("#navval").val());
+  const Unit = Amount / Nav;
+  const FixUnit = Unit.toFixed(3);
+  const FixNav = Nav.toFixed(3);
+  if (!Amount || !SipDate) {
     alert("Field Empty");
   } else {
-    SipDate = dateformat(SipDate);
-    firebase.database().ref(fund + SipDate).set(
+    //SipDate = dateformat(SipDate);
+    firebase.database().ref(selectedFund.name + '/' + SipDate).set(
       {
-        name: HolderName,
+        name: selectedFund.holderName,
         amount: Amount,
-        nav: Nav,
-        unit: Unit
-      }, (err)=> {
+        nav: FixNav,
+        unit: FixUnit
+      }, (err) => {
         if (err) {
           swal({
             position: 'center',
@@ -85,79 +97,32 @@ const Pay = () => {
           swal({
             position: 'center',
             icon: 'success',
-            title:'Success',
+            title: 'Success',
             text: 'Successfully Added',
             button: false,
             timer: 2000
           });
-          setInterval(()=> {
+          setInterval(() => {
             $('#hn')[0].checked;
             $("#amnt").val("");
             $("#sipdate").val("");
             window.location.href = "./MutualFund";
           }, 2000);
+          alert("done");
         }
       });
   }
-
 }
 
-const reverseString = (str) => {
-  // empty string
-  let newString = "";
-  for (i = str.length - 1; i >= 0; i--) {
-    newString += str[i];
-  }
-  return newString;
-}
+$('#seel').change(function() {
+  const value = $(this).val();
+  const selectedFund = funds.find(fund => fund.value === value);
 
-const dateformat = (str) => {
-  if (str != "") {
-    let dd = str.slice(8);
-    let mm = str.slice(5, 7);
-    let yy = str.slice(0, 4);
-    let newdate = dd+' '+monthConvet(mm)+' '+yy;
-    return newdate;
-  } else {
-    return "01 January 2001";
-  }
-}
-
-const monthConvet = (mm) => {
-  console.log(mm);
-  if (mm == "01") {
-    return 'January';
-  } else if (mm == "02") {
-    return 'February';
-  } else if (mm == "02") {
-    return 'March';
-  } else if (mm == "04") {
-    return 'April';
-  } else if (mm == "05") {
-    return 'May';
-  } else if (mm == "06") {
-    return 'June';
-  } else if (mm == "07") {
-    return 'July';
-  } else if (mm == "08") {
-    return 'August';
-  } else if (mm == "09") {
-    return 'September';
-  } else if (mm == "10") {
-    return 'October';
-  } else if (mm == "11") {
-    return 'November';
-  } else {
-    return 'December';
-  }
-}
-
-$('#sel').change(function() {
-  var value = $(this).val();
-  console.log(value);
-  if (value == "ICICI") {
+  if (selectedFund && selectedFund.holderName === 'Javed & Obaidur') {
     $("#siphol").css("display", "initial");
+    console.log(selectedFund, selectedFund.holderName);
   } else {
     $("#siphol").css("display", "none");
+    console.log(selectedFund, selectedFund.holderName);
   }
 });
