@@ -1,4 +1,7 @@
+var uid;
 auth.onAuthStateChanged(user => {
+  uid = user.email;
+  $('#uloger').text(uid);
   if (user) {
     $("body").css("display", "initial");
 
@@ -7,6 +10,7 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+console.log(uid);
 let Invested = 0;
 let Current = 0;
 let TotalReturn = 0;
@@ -67,7 +71,7 @@ fetchAllData().then((data) => {
   var i = 1;
   data.forEach((fundData) => {
     let addTab = "";
-    console.log(fundData);
+  
     firebase.database().ref(fundData.name).once('value',
       (snap)=> {
         addTab += createTable(i);
@@ -91,7 +95,7 @@ fetchAllData().then((data) => {
             day: '2-digit', month: 'long', year: 'numeric'
           };
           let formattedDate = date.toLocaleDateString('en-IN', options);
-          console.log(options, date, formattedDate); 
+          
 
           $('#FundName'+i).text(fundData.name);
           addRow += '<tr><td data-label="Date">'+formattedDate+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
