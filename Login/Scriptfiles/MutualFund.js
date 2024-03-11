@@ -77,7 +77,7 @@ fetchAllData().then((data) => {
         snap.forEach((fire)=> {
           Key = fire.key;
           Data = fire.val();
-          date = Key;
+          let dateString = Key;
           name = Data.name;
           amount = Data.amount;
           nav = Data.nav;
@@ -86,10 +86,15 @@ fetchAllData().then((data) => {
           TotalAmount += calc;
           calc = Number(unit);
           TotalUnit += calc;
-
+          date = new Date(dateString);
+          let options = {
+            day: '2-digit', month: 'long', year: 'numeric'
+          };
+          let formattedDate = date.toLocaleDateString('en-IN', options);
+          console.log(options, date, formattedDate); 
 
           $('#FundName'+i).text(fundData.name);
-          addRow += '<tr><td data-label="Date">'+date+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
+          addRow += '<tr><td data-label="Date">'+formattedDate+'</td><td data-label="Name">'+name+'</td><td data-label="Amount">₹ '+amount+'</td><td data-label="Nav">'+nav+'</td><td data-label="Unit">'+unit+'</td></tr>';
 
         });
         $('#table_data'+i).append(addRow);
@@ -163,10 +168,11 @@ const createTable = (i)=> {
 
 const fade = ()=> {
   setTimeout(() => {
-  $("#datta").css("display",
-    "initial");
-  $("#preloader").css("display",
-    "none");},5000);
+    $("#datta").css("display",
+      "initial");
+    $("#preloader").css("display",
+      "none");
+  }, 5000);
 }
 
 //window.onload = fade;
