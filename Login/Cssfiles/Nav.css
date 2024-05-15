@@ -45,7 +45,7 @@ body {
 }
 .profile-dropdown {
   position: relative;
-  width: 200px;
+  width: 230px;
   display: flex;
   flex-direction: column;
   align-items: center;
