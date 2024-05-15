@@ -13,8 +13,8 @@
       "sizes": "512x512"
     }
   ],
-  //"start_url": "https://ijaved85.github.io/mutualfund/index.html",
-  "start_url": "http://localhost:8158/index.html",
+  "start_url": "https://ijaved85.github.io/mutualfund/index.html",
+  //"start_url": "http://localhost:8158/index.html",
   "display": "standalone",
   "theme_color": "#000112"
 }
