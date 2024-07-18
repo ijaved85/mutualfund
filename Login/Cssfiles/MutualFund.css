@@ -512,3 +512,10 @@ a, input[type="radio"], button {
 #loger span {
   color: #4caf50;
 }
+
+	
+@media (max-width: 480px) {
+  * {
+    zoom: 0.9;
+  }
+}
